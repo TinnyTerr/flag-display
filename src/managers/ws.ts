@@ -1,5 +1,5 @@
+import type http from "node:http";
 import { WebSocketServer } from "ws";
-import http from "node:http";
 import type { TopManager } from "./top.js";
 
 export class WebsocketManager {
@@ -20,10 +20,10 @@ export class WebsocketManager {
             });
 
             ws.on("message", (data) => {
-                let parsed;
+                let parsed: unknown;
                 try {
                     parsed = JSON.parse(data.toString());
-                } catch (e) {
+                } catch {
                     return;
                 }
 
