@@ -1,32 +1,41 @@
 {
-  // Visit https://aka.ms/tsconfig to read more about this file
-  "compilerOptions": {
-    // File Layout
-    "rootDir": "./src",
-    "outDir": "./dist",
+	"compilerOptions": {
+		// File Layout
+		"rootDir": "./src",
+		"outDir": "./dist",
 
-    // Environment Settings
-    "module": "nodenext",
-    "target": "esnext",
-    "lib": ["esnext"],
-    "types": ["node"],
+		// Environment setup & latest features
 
-    // Other Outputs
-    "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
+		"module": "nodenext",
+		"types": ["node"],
+		"lib": ["ESNext"],
+		"target": "ESNext",
+		"moduleDetection": "force",
+		"jsx": "react-jsx",
+		"allowJs": true,
 
-    // Stricter Typechecking Options
-    "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
+		// Other Outputs
+		"sourceMap": true,
+		"declaration": true,
+		"declarationMap": true,
 
-    // Recommended Options
-    "strict": true,
-    "jsx": "react-jsx",
-    "verbatimModuleSyntax": true,
-    "isolatedModules": true,
-    "noUncheckedSideEffectImports": true,
-    "moduleDetection": "force",
-    "skipLibCheck": true,
-  }
+		// Bundler mode
+		"moduleResolution": "bundler",
+		"allowImportingTsExtensions": true,
+		"verbatimModuleSyntax": true,
+		"noEmit": true,
+
+		// Best practices
+		"strict": true,
+		"skipLibCheck": true,
+		"noFallthroughCasesInSwitch": true,
+		"noUncheckedIndexedAccess": true,
+		"noImplicitOverride": true,
+		"exactOptionalPropertyTypes": true,
+
+		// Some stricter flags (disabled by default)
+		"noUnusedLocals": false,
+		"noUnusedParameters": false,
+		"noPropertyAccessFromIndexSignature": false
+	}
 }
