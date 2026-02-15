@@ -1,9 +1,9 @@
 // Stores persistence data about controllers
 // Passes auth data to managers/auth.ts
 
+import type { Controller } from "@shared/controller";
 import { randomUUIDv7 } from "bun";
 import type { Collection, Document } from "mongodb";
-import type { Controller } from "../../shared/controller";
 import type { Registry } from "../types/registry";
 
 class ControllerRegistry implements Registry {

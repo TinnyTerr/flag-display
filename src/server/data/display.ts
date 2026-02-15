@@ -1,9 +1,9 @@
 // Stores persistence data about displays
 // Passes auth data to managers/auth.ts
 
+import type { Display } from "@shared/display";
 import { randomUUIDv7 } from "bun";
 import type { Collection, Document } from "mongodb";
-import type { Display } from "../../shared/display";
 import type { Registry } from "../types/registry";
 
 class DisplayRegistry implements Registry {
