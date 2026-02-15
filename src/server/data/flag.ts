@@ -1,30 +1,30 @@
 // Stores persistence data about flags
 // This may mean flags per series, or flag data
 
+import type { FlagData } from "@shared/flag";
 import { randomUUIDv7 } from "bun";
 import type { Collection, Document } from "mongodb";
 import type { Registry } from "../types/registry";
-import type { Series } from "@shared/series";
 
 class DisplayRegistry implements Registry {
-    db?: Collection<Flag & Document>;
+    db?: Collection<FlagData & Document>;
     name: string = "Display Registry";
 
-    async init(collection: Collection<Flag & Document>): Promise<void> {
+    async init(collection: Collection<FlagData & Document>): Promise<void> {
         this.db = collection
     }
 
-    async findById(id: string): Promise<Flag | null> {
+    async findById(id: string): Promise<FlagData | null> {
         if (!this.db) throw new Error("Database not initialized");
         return await this.db.findOne({ id });
     }
 
-    async findByKey(key: string): Promise<Flag | null> {
+    async findByKey(key: string): Promise<FlagData | null> {
         if (!this.db) throw new Error("Database not initialized");
         return await this.db.findOne({ key });
     }
 
-    async newControlller(controller: Omit<Flag, "id">): Promise<Flag> {
+    async newControlller(controller: Omit<FlagData, "id">): Promise<FlagData> {
         if (!this.db) throw new Error("Database not initialized");
         const id = randomUUIDv7();
         await this.db.insertOne({ ...controller, id });
@@ -37,11 +37,5 @@ class DisplayRegistry implements Registry {
     }
 }
 
-interface Flag {
-    id: string;
-    name: string;
-    description: string;
-    series: Series[]
-}
 
 export default new DisplayRegistry();

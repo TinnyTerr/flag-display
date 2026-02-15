@@ -4,6 +4,7 @@
 import { randomUUIDv7 } from "bun";
 import type { Collection, Document } from "mongodb";
 import type { Registry } from "../types/registry";
+import type { Display } from "../../shared/display";
 
 class DisplayRegistry implements Registry {
     db?: Collection<Display & Document>;
@@ -34,13 +35,6 @@ class DisplayRegistry implements Registry {
         if (!this.db) throw new Error("Database not initialized");
         await this.db.deleteOne({ id });
     }
-}
-
-interface Display {
-    id: string;
-    key: string;
-    name: string;
-    description: string;
 }
 
 export default new DisplayRegistry();

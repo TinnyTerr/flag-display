@@ -3,6 +3,7 @@
 
 import { randomUUIDv7 } from "bun";
 import type { Collection, Document } from "mongodb";
+import type { Controller } from "../../shared/controller";
 import type { Registry } from "../types/registry";
 
 class ControllerRegistry implements Registry {
@@ -34,13 +35,6 @@ class ControllerRegistry implements Registry {
         if (!this.db) throw new Error("Database not initialized");
         await this.db.deleteOne({ id });
     }
-}
-
-interface Controller {
-    id: string;
-    key: string;
-    name: string;
-    description: string;
 }
 
 export default new ControllerRegistry();
