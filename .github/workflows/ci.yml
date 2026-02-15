@@ -16,7 +16,6 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@v1
 
-      - run: bunx tsc --noEmit
 
       - name: Cache bun deps
         id: cache-key
@@ -28,6 +27,8 @@ jobs:
           key: ${{ steps.cache-key.outputs.key }}
 
       - run: bun install --frozen-lockfile
+
+      - run: bunx tsc --noEmit
 
   biome-check:
     needs: setup
