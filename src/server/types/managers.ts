@@ -4,9 +4,7 @@ type App = ReturnType<typeof express>;
 
 /** All callable routing methods on an Express app */
 type RouteMethod = {
-	[K in keyof App]: App[K] extends (...args: unknown[]) => unknown
-		? K
-		: never;
+	[K in keyof App]: App[K] extends (...args: unknown[]) => unknown ? K : never;
 }[keyof App];
 
 /** Narrow to only the HTTP verb methods */
@@ -19,7 +17,7 @@ type HttpMethod = Extract<
 export type RouteDefinition = {
 	method: HttpMethod;
 	args: Parameters<App[HttpMethod]>;
-	role?: string
+	role?: string;
 };
 
 export interface Manager {

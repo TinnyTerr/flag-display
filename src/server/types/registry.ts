@@ -1,6 +1,6 @@
 export interface Registry {
-    readonly name: string;
-    readonly collName: string;
+	readonly name: string;
+	readonly collName: string;
 
-    init?(collection: unknown): Promise<void>;
+	init?(collection: unknown): Promise<void>;
 }
