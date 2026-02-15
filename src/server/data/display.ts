@@ -3,8 +3,8 @@
 
 import { randomUUIDv7 } from "bun";
 import type { Collection, Document } from "mongodb";
-import type { Registry } from "../types/registry";
 import type { Display } from "../../shared/display";
+import type { Registry } from "../types/registry";
 
 class DisplayRegistry implements Registry {
     db?: Collection<Display & Document>;
