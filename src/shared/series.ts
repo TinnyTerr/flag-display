@@ -1,0 +1,16 @@
+export enum Series {
+    F1 = "F1",
+    WEC = "WEC",
+    MotoGP = "MotoGP",
+    Rally = "Rally",
+    NASCAR = "NASCAR",
+    IndyCar = "IndyCar",
+    FormulaE = "FormulaE",
+    DTM = "DTM",
+    SuperGT = "SuperGT",
+    BTCC = "BTCC",
+    WTCR = "WTCR",
+    TCR = "TCR",
+    IMSA = "IMSA",
+    V8Supercars = "V8 Supercars",
+}

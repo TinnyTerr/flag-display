@@ -1,0 +1,46 @@
+// Stores persistence data about displays
+// Passes auth data to managers/auth.ts
+
+import { randomUUIDv7 } from "bun";
+import type { Collection, Document } from "mongodb";
+import type { Registry } from "../types/registry";
+
+class DisplayRegistry implements Registry {
+    db?: Collection<Display & Document>;
+    name: string = "Display Registry";
+
+    async init(collection: Collection<Display & Document>): Promise<void> {
+        this.db = collection
+    }
+
+    async findById(id: string): Promise<Display | null> {
+        if (!this.db) throw new Error("Database not initialized");
+        return await this.db.findOne({ id });
+    }
+
+    async findByKey(key: string): Promise<Display | null> {
+        if (!this.db) throw new Error("Database not initialized");
+        return await this.db.findOne({ key });
+    }
+
+    async newControlller(controller: Omit<Display, "id">): Promise<Display> {
+        if (!this.db) throw new Error("Database not initialized");
+        const id = randomUUIDv7();
+        await this.db.insertOne({ ...controller, id });
+        return { id, ...controller };
+    }
+
+    async deleteDisplay(id: string): Promise<void> {
+        if (!this.db) throw new Error("Database not initialized");
+        await this.db.deleteOne({ id });
+    }
+}
+
+interface Display {
+    id: string;
+    key: string;
+    name: string;
+    description: string;
+}
+
+export default new DisplayRegistry();
