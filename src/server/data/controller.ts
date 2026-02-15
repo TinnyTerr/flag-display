@@ -9,6 +9,7 @@ import type { Registry } from "../types/registry";
 class ControllerRegistry implements Registry {
     db?: Collection<Controller & Document>;
     name: string = "Controller Registry";
+    collName: string = "controllers";
 
     async init(collection: Collection<Controller & Document>): Promise<void> {
         this.db = collection
@@ -24,7 +25,7 @@ class ControllerRegistry implements Registry {
         return await this.db.findOne({ key });
     }
 
-    async newControlller(controller: Omit<Controller, "id">): Promise<Controller> {
+    async newController(controller: Omit<Controller, "id">): Promise<Controller> {
         if (!this.db) throw new Error("Database not initialized");
         const id = randomUUIDv7();
         await this.db.insertOne({ ...controller, id });

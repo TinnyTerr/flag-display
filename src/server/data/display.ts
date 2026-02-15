@@ -9,6 +9,7 @@ import type { Registry } from "../types/registry";
 class DisplayRegistry implements Registry {
     db?: Collection<Display & Document>;
     name: string = "Display Registry";
+    collName: string = "displays";
 
     async init(collection: Collection<Display & Document>): Promise<void> {
         this.db = collection
@@ -24,11 +25,11 @@ class DisplayRegistry implements Registry {
         return await this.db.findOne({ key });
     }
 
-    async newControlller(controller: Omit<Display, "id">): Promise<Display> {
+    async newDisplay(display: Omit<Display, "id">): Promise<Display> {
         if (!this.db) throw new Error("Database not initialized");
         const id = randomUUIDv7();
-        await this.db.insertOne({ ...controller, id });
-        return { id, ...controller };
+        await this.db.insertOne({ ...display, id });
+        return { id, ...display };
     }
 
     async deleteDisplay(id: string): Promise<void> {

@@ -6,9 +6,10 @@ import { randomUUIDv7 } from "bun";
 import type { Collection, Document } from "mongodb";
 import type { Registry } from "../types/registry";
 
-class DisplayRegistry implements Registry {
+class FlagRegistry implements Registry {
     db?: Collection<FlagData & Document>;
-    name: string = "Display Registry";
+    name: string = "Flag Registry";
+    collName: string = "flags";
 
     async init(collection: Collection<FlagData & Document>): Promise<void> {
         this.db = collection
@@ -19,16 +20,11 @@ class DisplayRegistry implements Registry {
         return await this.db.findOne({ id });
     }
 
-    async findByKey(key: string): Promise<FlagData | null> {
-        if (!this.db) throw new Error("Database not initialized");
-        return await this.db.findOne({ key });
-    }
-
-    async newControlller(controller: Omit<FlagData, "id">): Promise<FlagData> {
+    async newFlag(flag: Omit<FlagData, "id">): Promise<FlagData> {
         if (!this.db) throw new Error("Database not initialized");
         const id = randomUUIDv7();
-        await this.db.insertOne({ ...controller, id });
-        return { id, ...controller };
+        await this.db.insertOne({ ...flag, id });
+        return { id, ...flag };
     }
 
     async deleteDisplay(id: string): Promise<void> {
@@ -38,4 +34,4 @@ class DisplayRegistry implements Registry {
 }
 
 
-export default new DisplayRegistry();
+export default new FlagRegistry();
