@@ -8,7 +8,8 @@ import { MongoClient } from "mongodb";
 const db = new MongoClient("mongodb://localhost:27017").db("test-flag-display");
 
 describe("registry testing", () => {
-	describe("controller registry", () => {
+	describe("controller registry", async () => {
+		await db.dropCollection(controller.collName);
 		const coll = db.collection(controller.collName);
 
 		const data = {
@@ -18,20 +19,15 @@ describe("registry testing", () => {
 			description: "string",
 		};
 
-		const findOne = mock(({ id }) => (id === data.id ? data : null));
-		const insertOne = mock((doc) => {
-			if (doc.id === data.id) throw new Error("Duplicate ID");
-			return { acknowledged: true, insertedId: doc.id };
-		});
-		const deleteOne = mock(({ id }) =>
-			id === data.id
-				? { acknowledged: true, deletedCount: 1 }
-				: { acknowledged: true, deletedCount: 0 },
-		);
+		coll.insertOne(data);
+
+		const findOne = mock(({ id }) => coll.findOne({ id }));
+		const insertOne = mock((doc) => coll.insertOne(doc));
+		const deleteOne = mock(({ id }) => coll.deleteOne({ id }));
 
 		// biome-ignore lint/suspicious/noExplicitAny: stop complaining its testing
 		controller.init({ findOne, insertOne, deleteOne } as any);
-		//
+		
 
 		coll.insertOne(data);
 
@@ -56,7 +52,7 @@ describe("registry testing", () => {
 				description: "desc",
 				key: "key",
 			});
-			expect(result).toBeTruthy()
+			expect(result).toBeTruthy();
 		});
 	});
 });
