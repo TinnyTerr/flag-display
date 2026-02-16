@@ -27,7 +27,6 @@ describe("registry testing", () => {
 
 		// biome-ignore lint/suspicious/noExplicitAny: stop complaining its testing
 		controller.init({ findOne, insertOne, deleteOne } as any);
-		
 
 		coll.insertOne(data);
 
